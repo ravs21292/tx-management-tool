@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Management form</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+       
+        <div class="container">
+            <div class="form-container">
+                <form id="txForm"  method="post" >
+                    <div class="form-group">
+                        <label for="tx_type">Transaction type</label>
+                        <select name="tx_type" id="tx_type">
+                            <option value="credit">Credit</option>
+                            <option value="debit">Debit</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                       <input type="text" name="amount" id="amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                       <input type="text" name="description" id="description">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="submit">Save</button>
+                        <button type="submit" class="cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded",function(){
+                console.log("Js start....")
+                var form = document.querySelector('form');
+                console.log(form.id);
+                form.addEventListener("submit",function(e){
+                    e.preventDefault();
+                    var desc = document.getElementById('description').value;
+                    var amount = document.getElementById('amount').value;
+                    var txType = document.getElementById('tx_type').value;
+
+                    
+                    fetch('txListing.php')
+                    .then((response) => {
+                        console.log(response.json());
+                    })
+                    .catch(error => console.log("Error:",error))
+                })
+            })
+        </script>
+    </body>
+</html>

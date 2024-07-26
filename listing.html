@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction Listing</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("txListing.php")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const txList = document.getElementById("txListing");
+                        data.data.forEach(tx => {
+                            const txItem = document.createElement("li");
+                            txItem.textContent = `ID: ${tx.id}, Description: ${tx.description}, Credit: ${tx.credit ?? 'N/A'}, Debit: ${tx.debit ?? 'N/A'}, Running Balance: ${tx.running_balance}, Transaction Date: ${tx.tx_date}, Created At: ${tx.created_at}`;
+                            txList.appendChild(txItem);
+                        });
+                    } else {
+                        document.getElementById("txListing").textContent = "Error fetching transactions.";
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("txListing").textContent = "Error fetching transactions.";
+                    console.error("Error fetching transactions:", error);
+                });
+        });
+    </script>
+</head>
+<body>
+    <h1>Transactions</h1>
+    <ul id="txListing"></ul>
+</body>
+</html>
